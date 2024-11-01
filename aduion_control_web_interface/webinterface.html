@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Take Home Exam</title>
+    <script>
+      function runCamera() {
+        fetch("runCamera")
+          .then((response) => {
+            location.reload();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+      function runSegment() {
+        fetch("runSegment").catch((error) => {
+          console.error("Error:", error);
+        });
+      }
+      function runLCD() {
+        fetch("runLCD").catch((error) => {
+          console.error("Error:", error);
+        });
+      }
+    </script>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        text-align: center;
+        width: 300px;
+      }
+
+      section {
+        margin-bottom: 20px;
+      }
+
+      input,
+      button {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+
+      button {
+        cursor: pointer;
+        text-align: center;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      #image-container {
+        margin-top: 10px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Take Home Exam</h1>
+      <span>20203128 강민규</span>
+
+      <section>
+        <h2>Camera Control</h2>
+        <div id="image-container">
+          <p>Press the button to take a picture.</p>
+        </div>
+        <button id="camera-button" onclick="runCamera()">Take!</button>
+      </section>
+
+      <section>
+        <h2>Segment Control</h2>
+        <input
+          type="number"
+          id="number-input"
+          placeholder="Please enter a single digit number."
+        />
+        <button id="submit-number" onclick="runSegment()">Submit!</button>
+      </section>
+
+      <section>
+        <h2>LCD Control</h2>
+        <input type="text" id="text-input" placeholder="Please enter string." />
+        <button id="submit-text" onclick="runLCD()">Submit!</button>
+      </section>
+    </div>
+  </body>
+</html>
