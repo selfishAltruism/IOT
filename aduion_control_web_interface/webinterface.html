@@ -6,7 +6,7 @@
     <title>Take Home Exam</title>
     <script>
       function runCamera() {
-        fetch("runCamera")
+        fetch("http://localhost:8888/runCamera")
           .then((response) => {
             location.reload();
           })
@@ -14,13 +14,19 @@
             console.error("Error:", error);
           });
       }
-      function runSegment() {
-        fetch("runSegment").catch((error) => {
+
+      function runSegment(content) {
+        const encodedString = encodeURIComponent(content); // 문자열 인코딩
+        const url = `http://localhost:8888/runSegment/${encodedString}`; // URL 구성
+        fetch(url).catch((error) => {
           console.error("Error:", error);
         });
       }
-      function runLCD() {
-        fetch("runLCD").catch((error) => {
+
+      function runLCD(content) {
+        const encodedString = encodeURIComponent(content); // 문자열 인코딩
+        const url = `http://localhost:8888/runLCD/${encodedString}`; // URL 구성
+        fetch(url).catch((error) => {
           console.error("Error:", error);
         });
       }
