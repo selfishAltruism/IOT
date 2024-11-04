@@ -4,15 +4,13 @@ LiquidCrystal_I2C lcd(0x3F, 16, 2); // LCD 객체 생성
 
 // 핀 설정
 const int BUZZER_PIN = 9;  // 부저 핀을 9번으로 설정
-
-const int SEGMENT_A = 10; // 세그먼트 A
-const int SEGMENT_B = 3;  // 세그먼트 B
-const int SEGMENT_C = 4;  // 세그먼트 C
-const int SEGMENT_D = 5;  // 세그먼트 D
-const int SEGMENT_E = 6;  // 세그먼트 E
-const int SEGMENT_F = 7;  // 세그먼트 F
-const int SEGMENT_G = 8;  // 세그먼트 G
-
+const int SEGMENT_A = 10;  // 세그먼트 A
+const int SEGMENT_B = 3;   // 세그먼트 B
+const int SEGMENT_C = 4;   // 세그먼트 C
+const int SEGMENT_D = 5;   // 세그먼트 D
+const int SEGMENT_E = 6;   // 세그먼트 E
+const int SEGMENT_F = 7;   // 세그먼트 F
+const int SEGMENT_G = 8;   // 세그먼트 G
 
 // 각 알파벳을 출력하는 함수
 void displayNumber(char character) {
@@ -45,7 +43,7 @@ void displayNumber(char character) {
       digitalWrite(SEGMENT_G, HIGH);
       break;
     case '3':
-      digitalWrite(SEGMENT_A, HIGH );
+      digitalWrite(SEGMENT_A, HIGH);
       digitalWrite(SEGMENT_B, HIGH);
       digitalWrite(SEGMENT_C, HIGH);
       digitalWrite(SEGMENT_D, HIGH);
@@ -112,8 +110,7 @@ void displayNumber(char character) {
   }
 }
 
-//실행 코드//
-
+// 실행 코드 //
 void setup() {
   pinMode(BUZZER_PIN, OUTPUT);
 
@@ -142,11 +139,11 @@ void loop() {
     digitalWrite(SEGMENT_F, LOW);
     digitalWrite(SEGMENT_G, LOW);
 
-    lcd.clear(); //LCD 초기화
+    lcd.clear(); // LCD 초기화
 
     String modeMessage = Serial.readStringUntil('\n');
 
-    if (modeMessage.equals("CAMERA")){
+    if( modeMessage[0] == 'C' ) {
       tone(BUZZER_PIN, 493.88);
       delay(100);
       tone(BUZZER_PIN, 440.00);
@@ -154,17 +151,20 @@ void loop() {
       tone(BUZZER_PIN, 493.88);
       delay(100);
       noTone(BUZZER_PIN);
-    } else if (modeMessage.equals("LCD")) {
-      while (Serial.available() <= 0) {} //Message가 올 때까지 대기
-      String messageContent = Serial.readStringUntil('\n'); 
-      lcd.setCursor(0,0);
+      // 응답 전송
+      Serial.println("Camera command received.");
+    }else if ( modeMessage[0] == 'L' ) {
+      String contentMessage = modeMessage.substring(1);
+      lcd.setCursor(0, 0);
       lcd.print("20203128 KMK");
-      lcd.setCursor(0,1);
-      lcd.print(messageContent);
-    } else if (modeMessage.equals("SEGMENT")) {
-      while (Serial.available() <= 0) {} //Message가 올 때까지 대기
-      String messageContent = Serial.readStringUntil('\n'); 
-      displayNumber(messageContent.charAt(0));
+      lcd.setCursor(0, 1);
+      lcd.print(contentMessage);
+      // 응답 전송
+      Serial.println("LCD command received with message: " + contentMessage);
+    } else if ( modeMessage[0] == 'S' ) {
+      displayNumber(modeMessage[1]);
+      //응답 전송
+      Serial.println("Segment command received with number: " + modeMessage[1]);
     }
   }
 }
