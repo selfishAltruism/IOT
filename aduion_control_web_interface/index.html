@@ -6,7 +6,7 @@
     <title>Take Home Exam</title>
     <script>
       function runCamera() {
-        fetch("http://localhost:8888/runCamera")
+        fetch("http://192.168.137.21:8888/runCamera")
           .then((response) => {
             location.reload();
           })
@@ -15,17 +15,19 @@
           });
       }
 
-      function runSegment(content) {
-        const encodedString = encodeURIComponent(content); // 문자열 인코딩
-        const url = `http://localhost:8888/runSegment/${encodedString}`; // URL 구성
+      function runSegment() {
+        const numberInput = document.getElementById("number-input").value;
+        const encodedString = encodeURIComponent(numberInput); // 문자열 인코딩
+        const url = `http://192.168.137.21:8888/runSegment/${encodedString}`; // URL 구성
         fetch(url).catch((error) => {
           console.error("Error:", error);
         });
       }
 
-      function runLCD(content) {
-        const encodedString = encodeURIComponent(content); // 문자열 인코딩
-        const url = `http://localhost:8888/runLCD/${encodedString}`; // URL 구성
+      function runLCD() {
+        const textInput = document.getElementById("text-input").value;
+        const encodedString = encodeURIComponent(textInput); // 문자열 인코딩
+        const url = `http://192.168.137.21:8888/runLCD/${encodedString}`; // URL 구성
         fetch(url).catch((error) => {
           console.error("Error:", error);
         });
@@ -71,6 +73,10 @@
         border: 1px solid #ccc;
         border-radius: 8px;
         background-color: #f9f9f9;
+      }
+
+      img {
+        width: 300px;
       }
     </style>
   </head>
