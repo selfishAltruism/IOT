@@ -113,9 +113,6 @@ static enum MHD_Result answer_to_connection(void *cls, struct MHD_Connection *co
 }
 
 int main() {
-    int fd = initialize_serial_connection(SERIAL_PORT, BAUD_RATE);
-    send_and_receive(fd, "CAMERA");
-
     struct MHD_Daemon *daemon;
     daemon = MHD_start_daemon(MHD_USE_INTERNAL_POLLING_THREAD, PORT, NULL, NULL,
                                &answer_to_connection, NULL, MHD_OPTION_END);
